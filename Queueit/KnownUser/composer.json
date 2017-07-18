@@ -1,0 +1,31 @@
+{
+    "name": "queueit/known-user",
+    "description": "Using queueit known user to manage magento integration",
+    "require": {
+                  "php": "~5.5.0|~5.6.0",
+            "magento/magento-composer-installer": "*"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@bitbucket.org:vendor/my-private-repo.git"
+        }
+    ],
+    "type": "magento2-module",
+    "version": "0.0.1",
+    "extra": {
+        "map": [
+            [
+                "*",
+                "Queueit/Knownuser"
+            ]
+        ]
+    },
+    "authors": [
+        {
+            "name": "Alan Kent",
+            "homepage": "https://alankent.wordpress.com/",
+            "role": "Developer"
+        }
+    ]
+}   
