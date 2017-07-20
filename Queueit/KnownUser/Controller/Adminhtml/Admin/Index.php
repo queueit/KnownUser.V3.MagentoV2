@@ -1,5 +1,7 @@
 <?php
-namespace Queueit\KnownUser\Controller\Adminhtml\Configuration;
+namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
+require_once( __DIR__ .'..\..\..\..\IntegrationInfoProvider.php');
+use \DateTime;
 
       class Index extends \Magento\Backend\App\Action
       {
@@ -7,6 +9,7 @@ namespace Queueit\KnownUser\Controller\Adminhtml\Configuration;
         * @var \Magento\Framework\View\Result\PageFactory
         */
         protected $resultPageFactory;
+
 
         /**
          * Constructor
@@ -21,6 +24,7 @@ namespace Queueit\KnownUser\Controller\Adminhtml\Configuration;
          
              parent::__construct($context);
              $this->resultPageFactory = $resultPageFactory;
+
         }
 
         /**
@@ -30,8 +34,20 @@ namespace Queueit\KnownUser\Controller\Adminhtml\Configuration;
          */
         public function execute()
         {
-               $resultPage = $this->resultPageFactory->create();
-               return $resultPage;
+            $configProvider = new \Queueit\KnownUser\IntegrationInfoProvider();
+            $configText =  $configProvider->getIntegrationInfo(true);
+            $customerIntegration = json_decode($configText, true);
+            
+            $resultPage = $this->resultPageFactory->create();
+            $layout = $resultPage->getLayout();
+            $block = $layout->getBlock('main_panel');
+
+
+            $block->setAccountId($customerIntegration["AccountId"]);
+            $block->setVersion($customerIntegration["Version"]);
+            $block->setPublishDate($customerIntegration["PublishDate"]);
+            $block->setIntegrationConfig( $configText);
+            return $resultPage;
 
         }
       }

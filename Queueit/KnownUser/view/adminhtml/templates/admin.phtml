@@ -1,0 +1,23 @@
+     <p>
+      <label style="width:200px" >Publisher</label>
+      <br/>
+        <input readonly type="text" value="<?php echo $this->getAccountId() ?>" > </input>
+    </p>
+     <p>
+      <label style="width:100px" >Version</label>
+      <br/>
+        <input readonly type="text" value="<?php echo $this->getVersion() ?>" > </input>
+    </p>
+    <p>
+      <label style="width:100px" >Publish Date</label>
+      <br/>
+        <input readonly type="text" value="<?php echo $this->getPublishDate() ?>" > </input>
+    </p>
+    <p>
+      <label style="width:100px" >Integration Config</label>
+
+
+    </p>
+          <textarea rows="10" cols="200" readonly >
+<?php echo $this->getIntegrationConfig() ?>
+          </textarea>

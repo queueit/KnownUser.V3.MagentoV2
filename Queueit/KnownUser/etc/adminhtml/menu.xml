@@ -2,6 +2,6 @@
     <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
         <menu>
           <add id="Queueit_KnownUser::knownuser" title="KnownUser" translate="title" module="Queueit_KnownUser" parent="Magento_Backend::content" sortOrder="50" dependsOnModule="Queueit_KnownUser" resource="Queueit_KnownUser::knownuser" />
-          <add id="Queueit_KnownUser::knownuser_configuration" title="Configuration" translate="title" module="Queueit_KnownUser" parent="Queueit_KnownUser::knownuser" sortOrder="10" dependsOnModule="Queueit_KnownUser" action="knownuser/configuration" resource="Queueit_KnownUser::knownuser_configuration"/>
+          <add id="Queueit_KnownUser::knownuser_admin" title="Admin" translate="title" module="Queueit_KnownUser" parent="Queueit_KnownUser::knownuser" sortOrder="10" dependsOnModule="Queueit_KnownUser" action="knownuser/admin" resource="Queueit_KnownUser::knownuser_admin"/>
         </menu>
     </config>

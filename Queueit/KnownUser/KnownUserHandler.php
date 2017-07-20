@@ -14,7 +14,7 @@ class KnownUserHandler
     {
         $queueittoken = isset( $_GET["queueittoken"] )? $_GET["queueittoken"] :'';
         $configProvider = new IntegrationInfoProvider();
-        $configText =  $configProvider->getIntegrationInfo();
+        $configText =  $configProvider->getIntegrationInfo(true);
         try
         {
             $fullUrl =$this->getFullRequestUri();
