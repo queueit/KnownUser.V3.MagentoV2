@@ -11,12 +11,6 @@
                 "Queueit/KnownUser"
             ]
         ]
-    },
-    "authors": [
-        {
-            "name": "Alan Kent",
-            "homepage": "https://alankent.wordpress.com/",
-            "role": "Developer"
-        }
-    ]
+    }
+    
 }   
