@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="queueit_knownuser" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="0" type="text"> <!-- Create a new section with selected scope -->
-            <label>KnownUser Integration</label>
+            <label>QueueIt KnownUser </label>
             <tab>service</tab> <!-- The tab we are adding this section to -->
             <resource>Queueit_KnownUser::system_config</resource> <!-- The ACL Resource -->
             <group id="configuration" translate="label" showInDefault="1" showInWebsite="1" showInStore="0" sortOrder="1">

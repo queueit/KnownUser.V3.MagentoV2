@@ -38,7 +38,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
     /**
      * Update IntegraionInfo.
      * @api
-     * @param string $integrationinfo
+     * @param string $integrationInfo
      * @param string $hash
      * @return 
      */
@@ -65,12 +65,6 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
           \Magento\Store\Model\ScopeInterface::SCOPE_STORE
       );
       $calculatedHash = hash_hmac('sha256', $integrationInfo, $secretKey);
-      $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
-      $logger = $objectManager->get("Psr\Log\LoggerInterface");
-           $logger->debug($integrationInfo);
-      $logger->debug($calculatedHash);
-      $logger->debug($hash);
       return $calculatedHash == $hash;
-
    }
 }

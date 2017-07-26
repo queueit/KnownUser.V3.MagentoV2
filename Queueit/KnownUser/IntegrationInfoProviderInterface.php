@@ -7,9 +7,9 @@ interface IntegrationInfoProviderInterface
     /**
      * Update IntegraionInfo.
      *@api
-     * @param string $integrationinfo
-       * @param string $hash
-    * @return 
+     * @param string $integrationInfo
+     * @param string $hash
+     * @return 
      */
-   public function updateIntegrationInfo($integrationinfo,$hash);
+   public function updateIntegrationInfo($integrationInfo,$hash);
 }

@@ -41,8 +41,6 @@ use \DateTime;
             $resultPage = $this->resultPageFactory->create();
             $layout = $resultPage->getLayout();
             $block = $layout->getBlock('main_panel');
-
-
             $block->setAccountId($customerIntegration["AccountId"]);
             $block->setVersion($customerIntegration["Version"]);
             $block->setPublishDate($customerIntegration["PublishDate"]);

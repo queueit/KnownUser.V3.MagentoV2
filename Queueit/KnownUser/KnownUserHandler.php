@@ -8,51 +8,52 @@ require_once( __DIR__ .'\lib\knownuser\KnownUser.php');
 
 class KnownUserHandler
 {
-
-
     public function handleRequest($customerId, $secretKey)
     {
-        $queueittoken = isset( $_GET["queueittoken"] )? $_GET["queueittoken"] :'';
-        $configProvider = new IntegrationInfoProvider();
-        $configText =  $configProvider->getIntegrationInfo(true);
+
+ 
         try
         {
+            $queueittoken = isset( $_GET["queueittoken"] )? $_GET["queueittoken"] :'';
+            $configProvider = new IntegrationInfoProvider();
+            $configText =  $configProvider->getIntegrationInfo(true);
             $fullUrl =$this->getFullRequestUri();
             $result = \QueueIT\KnownUserV3\SDK\KnownUser::validateRequestByIntegrationConfig($fullUrl, 
-              $queueittoken, $configText,$customerId, $secretKey);
-          //var_dump($result);
+                                                                  $queueittoken, $configText,$customerId, $secretKey);
+
             if($result->doRedirect())
             {
                 //Send the user to the queue - either becuase hash was missing or becuase is was invalid
-            header('Location: '.$result->redirectUrl);
+                header('Location: '.$result->redirectUrl);
                 die();
             }
             if(!empty($queueittoken))
-            {
-                
-            //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
+            {   
+                //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
                 if(strpos($fullUrl,"&queueittoken=")!==false)
                 {
-            header('Location: '.str_replace("&queueittoken=".$queueittoken,"",$fullUrl));
+                    header('Location: '.str_replace("&queueittoken=".$queueittoken,"",$fullUrl));
                 }
                 else if(strpos($fullUrl,"?queueittoken=".$queueittoken."&")!==false)
                 {
-            header('Location: '.str_replace("queueittoken=".$queueittoken,"",  $fullUrl));
+                    header('Location: '.str_replace("queueittoken=".$queueittoken,"",  $fullUrl));
                 }
                 else if(strpos($fullUrl,"?queueittoken=".$queueittoken)!==false)
                 {
-            header('Location: '.str_replace("?queueittoken=".$queueittoken,"",  $fullUrl));
+                    header('Location: '.str_replace("?queueittoken=".$queueittoken,"",  $fullUrl));
                 }
-            die();
+                die();
             }
         }
         catch(\Exception $e)
         {
-            var_dump($e);
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+                $logger = $objectManager->get("Psr\Log\LoggerInterface");
+                $logger->debug("Queueit-knownUser: Exception while validation user request". $e);
           //log the exception
         }
     }
-        private function getFullRequestUri()
+    private function getFullRequestUri()
     {
         // Get HTTP/HTTPS (the possible values for this vary from server to server)
         $myUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']),array('off','no'))) ? 'https' : 'http';

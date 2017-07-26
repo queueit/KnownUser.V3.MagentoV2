@@ -7,7 +7,7 @@ use Magento\Framework\Event\ObserverInterface;
 
 class KnownUserObserver implements ObserverInterface
 {
-  private $logger;
+
   private $urlProvider;
   private $scopeConfig;
   private $helper;
@@ -15,21 +15,17 @@ class KnownUserObserver implements ObserverInterface
   const CONFIG_ENABLED = 'queueit_knownuser/configuration/enable';
   const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
   const CONFIG_CUSTOMERID = 'queueit_knownuser/configuration/customerid';
-  public function __construct(\Psr\Log\LoggerInterface $logger,
+  public function __construct(
   \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
   \Magento\Framework\App\State $state)
   {
-    $this->logger = $logger;
-    $this->scopeConfig = $scopeConfig;
+  $this->scopeConfig = $scopeConfig;
     $this->state= $state;
 
-    //Observer initialization code...
-    //You can use dependency injection to get any class this observer may need.
   }
 
   public function execute(\Magento\Framework\Event\Observer $observer)
   {
-
       if( $this->state->getAreaCode()== \Magento\Framework\App\Area::AREA_ADMINHTML)
       {
         //not any queueing logic for admin pages
@@ -61,19 +57,5 @@ class KnownUserObserver implements ObserverInterface
             $knownUserHandler = new \Queueit\KnownUser\KnownUserHandler();
             $knownUserHandler->handleRequest($customerId,$secretKey);
       }
-            
-
   }
 }
-
-
-
-
-
-         
-      //$this->logger->debug('******************');
-      //$this->logger->debug(!$req->isAjax());
-     // $this->logger->debug($req);
-     //helper('core/url')->getCurrentUrl()
-     // $this->logger->debug('******************');
-      //$event = $observer->getEvent();
