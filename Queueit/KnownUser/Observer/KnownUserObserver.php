@@ -51,7 +51,7 @@ class KnownUserObserver implements ObserverInterface
           //if config is not set return
             return;
         }
-      if( $enable && !$req->isAjax())
+      if($enable)
       {
         //if module is enable and request is not ajax do queue logic
             $knownUserHandler = new \Queueit\KnownUser\KnownUserHandler();
