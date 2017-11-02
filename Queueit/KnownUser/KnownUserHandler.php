@@ -21,15 +21,15 @@ class KnownUserHandler
             $result = \QueueIT\KnownUserV3\SDK\KnownUser::validateRequestByIntegrationConfig($fullUrl, 
                                                                   $queueittoken, $configText,$customerId, $secretKey);
 
-                 //Adding no cache headers to prevent browsers to cache requests
+           
+
+            if($result->doRedirect())
+            {
+                      //Adding no cache headers to prevent browsers to cache requests
                 header("Expires:Fri, 01 Jan 1990 00:00:00 GMT");
                 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
                 header("Pragma: no-cache");
                 //end
-
-            if($result->doRedirect())
-            {
-
                 
                 //Send the user to the queue - either becuase hash was missing or becuase is was invalid
                 header('Location: '.$result->redirectUrl);
