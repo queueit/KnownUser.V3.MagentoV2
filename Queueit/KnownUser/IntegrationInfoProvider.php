@@ -29,8 +29,13 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
         
         //Select Data from table
         $sql = "Select * FROM " . $tableName . ' order by id desc limit 1' ;
-        $result = $connection->fetchAll($sql)[0]['info'];
-        $cacheInterface->save($result, self::CACHE_KEY, array(),5*60);
+		$result="";
+		$rows  = $connection->fetchAll($sql);
+		if($rows)
+		{
+			$result = $rows[0]['info'];
+			$cacheInterface->save($result, self::CACHE_KEY, array(),5*60);
+		}
      }
       return hex2bin($result);     
    }
