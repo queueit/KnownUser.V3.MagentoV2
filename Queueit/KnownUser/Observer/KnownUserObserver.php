@@ -29,7 +29,7 @@ class KnownUserObserver implements ObserverInterface
       if( $this->state->getAreaCode()== \Magento\Framework\App\Area::AREA_ADMINHTML)
       {
         //not any queueing logic for admin pages
-        return;  
+        return $this;  
       }
       $controllerAction = $observer->getControllerAction();
       $req = $controllerAction->getRequest();
@@ -49,13 +49,14 @@ class KnownUserObserver implements ObserverInterface
         if(is_null($secretKey) ||  is_null($customerId) || is_null($enable))
         {
           //if config is not set return
-            return;
+            return $this;
         }
       if($enable)
       {
         //if module is enable and request is not ajax do queue logic
             $knownUserHandler = new \Queueit\KnownUser\KnownUserHandler();
-            $knownUserHandler->handleRequest($customerId,$secretKey);
-      }
+            $knownUserHandler->handleRequest($customerId,$secretKey, $observer);
+	 }
+	 return $this;
   }
 }

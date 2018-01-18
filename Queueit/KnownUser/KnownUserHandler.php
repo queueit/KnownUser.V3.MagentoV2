@@ -1,56 +1,58 @@
 <?php
 namespace Queueit\KnownUser;
-error_reporting(E_ALL);
+
 require_once( __DIR__ .'\IntegrationInfoProvider.php');
-require_once( __DIR__ .'\lib\knownuser\Models.php');
-require_once( __DIR__ .'\lib\knownuser\KnownUser.php');
+require_once( __DIR__ .'\..\knownuser\Models.php');
+require_once( __DIR__ .'\..\knownuser\KnownUser.php');
 
 
 class KnownUserHandler
 {
-    public function handleRequest($customerId, $secretKey)
+    public function handleRequest($customerId, $secretKey,  $observer)
     {
-
+        $action = $observer->getEvent()->getControllerAction();
+        /** @var Mage_Core_Controller_Request_Http $request */
+        $request = $action->getRequest();
  
         try
         {
-            $queueittoken = isset( $_GET["queueittoken"] )? $_GET["queueittoken"] :'';
+            $queueittoken = $request->getQuery('queueittoken', '');
             $configProvider = new IntegrationInfoProvider();
             $configText =  $configProvider->getIntegrationInfo(true);
-            $fullUrl =$this->getFullRequestUri();
+            $fullUrl = $this->getFullRequestUri();
             $result = \QueueIT\KnownUserV3\SDK\KnownUser::validateRequestByIntegrationConfig($fullUrl, 
                                                                   $queueittoken, $configText,$customerId, $secretKey);
 
-           
 
             if($result->doRedirect())
             {
-                      //Adding no cache headers to prevent browsers to cache requests
-                header("Expires:Fri, 01 Jan 1990 00:00:00 GMT");
-                header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-                header("Pragma: no-cache");
-                //end
-                
-                //Send the user to the queue - either becuase hash was missing or becuase is was invalid
-                header('Location: '.$result->redirectUrl);
-                die();
+                $response = $action->getResponse();
+              
+                $response->setHeader('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+                $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+                $response->setHeader('Pragma', 'no-cache');
+				$response->setRedirect($result->redirectUrl)->sendResponse();
+                return;
             }
+
             if(!empty($queueittoken))
             {   
+                $redirectUrl = $fullUrl;
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
                 if(strpos($fullUrl,"&queueittoken=")!==false)
                 {
-                    header('Location: '.str_replace("&queueittoken=".$queueittoken,"",$fullUrl));
+                    $redirectUrl = str_replace("&queueittoken=".$queueittoken,"",$fullUrl);
                 }
                 else if(strpos($fullUrl,"?queueittoken=".$queueittoken."&")!==false)
                 {
-                    header('Location: '.str_replace("queueittoken=".$queueittoken,"",  $fullUrl));
+                    $redirectUrl =  str_replace("queueittoken=".$queueittoken."&","",  $fullUrl);
                 }
                 else if(strpos($fullUrl,"?queueittoken=".$queueittoken)!==false)
                 {
-                    header('Location: '.str_replace("?queueittoken=".$queueittoken,"",  $fullUrl));
+                    $redirectUrl = str_replace("?queueittoken=".$queueittoken,"",  $fullUrl);
                 }
-                die();
+                $action->getResponse()->setRedirect( $redirectUrl)->sendResponse();
+                return;
             }
         }
         catch(\Exception $e)
