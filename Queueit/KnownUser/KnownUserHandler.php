@@ -2,8 +2,8 @@
 namespace Queueit\KnownUser;
 
 require_once( __DIR__ .'\IntegrationInfoProvider.php');
-require_once( __DIR__ .'\..\knownuser\Models.php');
-require_once( __DIR__ .'\..\knownuser\KnownUser.php');
+require_once( __DIR__ .'\..\knownuserv3\Models.php');
+require_once( __DIR__ .'\..\knownuserv3\KnownUser.php');
 
 
 class KnownUserHandler
