@@ -1,5 +1,5 @@
 {
-  "name": "Queueit/KnownUser",
+  "name": "queueit/knownuser",
   "description": "Using queueit known user to manage magento integration",
 
   "type": "magento2-module",
@@ -11,7 +11,6 @@
         }
   },
   "require": {
-
     "queueit/knownuserv3": "*"
 
   }
