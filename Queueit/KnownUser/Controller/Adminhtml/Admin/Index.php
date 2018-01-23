@@ -48,6 +48,5 @@ use \DateTime;
             return $resultPage;
 
         }
-      }
-    ?>
+      }  
   
