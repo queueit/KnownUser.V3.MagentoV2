@@ -1,6 +1,6 @@
 <?php
 namespace Queueit\KnownUser;
-require_once( __DIR__ .'\IntegrationInfoProviderInterface.php');
+require_once( __DIR__ .'/IntegrationInfoProviderInterface.php');
         /**
      * Update IntegraionInfo.
      *@api

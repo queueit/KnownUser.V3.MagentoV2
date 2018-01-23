@@ -1,6 +1,6 @@
 <?php
 namespace Queueit\KnownUser\Observer;
-require_once( __DIR__ .'\..\IntegrationInfoProvider.php');
+require_once( __DIR__ .'/../IntegrationInfoProvider.php');
 use Magento\Framework\Event\ObserverInterface;
 
 
