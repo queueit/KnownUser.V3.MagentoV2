@@ -1,0 +1,17 @@
+{
+  "name": "queueit/knownuser",
+  "description": "Using queueit known user to manage magento integration",
+
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+            "Queueit\\KnownUser\\": ""
+        }
+  },
+  "require": {
+    "queueit/knownuserv3": "*"
+
+  }
+}

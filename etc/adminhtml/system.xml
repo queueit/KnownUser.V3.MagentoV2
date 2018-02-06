@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="queueit_knownuser" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="0" type="text"> <!-- Create a new section with selected scope -->
+            <label>QueueIt KnownUser </label>
+            <tab>service</tab> <!-- The tab we are adding this section to -->
+            <resource>Queueit_KnownUser::system_config</resource> <!-- The ACL Resource -->
+            <group id="configuration" translate="label" showInDefault="1" showInWebsite="1" showInStore="0" sortOrder="1">
+                <label>Configuration</label>
+                <field id="customerid" type="text" showInDefault="1" showInWebsite="1" showInStore="0" sortOrder="10">
+                    <label>Customer Id</label>
+                </field>
+                <field id="secretkey" type="text" showInDefault="1" showInWebsite="1" showInStore="0" sortOrder="10">
+                    <label>Secret Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model> <!-- This will ensure that the value is encrypted when it is saved and decrypted when pulled out of the database. You will need to add one more bit in order for this decryption to work -->
+                </field>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+            </group>
+        </section>
+    </system>
+</config>
