@@ -26,12 +26,21 @@ class KnownUserHandler
 
             if($result->doRedirect())
             {
-                $response = $action->getResponse();
-              
+                $response = $action->getResponse();            
                 $response->setHeader('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
                 $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
                 $response->setHeader('Pragma', 'no-cache');
-				$response->setRedirect($result->redirectUrl)->sendResponse();
+
+                if(!$result->isAjaxResult)
+                {
+                    $response->setRedirect($result->redirectUrl)->sendResponse();
+                }
+                else
+                {
+                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl());
+                    $response->sendResponse();
+                }
+				
                 return;
             }
 
