@@ -11,7 +11,7 @@
         }
   },
   "require": {
-    "queueit/knownuserv3": "*"
+     "queueit/knownuserv3": "^3.5.1"
 
   }
 }

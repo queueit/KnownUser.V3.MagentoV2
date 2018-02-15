@@ -59,6 +59,11 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
             $sql = "Insert Into " . $tableName . " (info) Values ('" . $integrationInfo ."')";
             $connection->query($sql);
         }
+        else
+		{
+			 $response->setStatusCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
+			 $response->sendResponse();
+		}
    }
 
    private function isValidRequest($integrationInfo,$hash)
