@@ -20,9 +20,14 @@ class KnownUserHandler
             $configProvider = new IntegrationInfoProvider();
             $configText =  $configProvider->getIntegrationInfo(true);
             $fullUrl = $this->getFullRequestUri();
-            $result = \QueueIT\KnownUserV3\SDK\KnownUser::validateRequestByIntegrationConfig($fullUrl, 
-                                                                  $queueittoken, $configText,$customerId, $secretKey);
-
+            $currentUrlWithoutQueueitToken =  preg_replace ( "/([\\?&])(" ."queueittoken". "=[^&]*)/i" , "" ,  $fullUrl);
+            
+            $result = \QueueIT\KnownUserV3\SDK\KnownUser::validateRequestByIntegrationConfig(
+				$currentUrlWithoutQueueitToken, 
+				$queueittoken, 
+				$configText,
+				$customerId, 
+				$secretKey);
 
             if($result->doRedirect())
             {
