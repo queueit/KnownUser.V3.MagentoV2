@@ -49,7 +49,7 @@ class KnownUserHandler
                 return;
             }
 
-            if(!empty($queueittoken))
+            if(!empty($queueittoken) &&!empty($result->actionType))
             {   
                 $redirectUrl = $fullUrl;
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
