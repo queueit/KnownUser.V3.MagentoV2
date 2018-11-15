@@ -44,7 +44,7 @@ class KnownUserHandler
                 }
                 else
                 {
-                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .'&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION);
+                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .urlencode('&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION));
                     $response->sendResponse();
                 }
 				
