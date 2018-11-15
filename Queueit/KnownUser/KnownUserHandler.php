@@ -8,6 +8,8 @@ require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
 
 class KnownUserHandler
 {
+	const MAGENTO_SDK_VERSION = "1.2.0";
+
     public function handleRequest($customerId, $secretKey,  $observer)
     {
         $action = $observer->getEvent()->getControllerAction();
@@ -38,11 +40,11 @@ class KnownUserHandler
 
                 if(!$result->isAjaxResult)
                 {
-                    $response->setRedirect($result->redirectUrl)->sendResponse();
+                    $response->setRedirect($result->redirectUrl .'&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION)->sendResponse();
                 }
                 else
                 {
-                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl());
+                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .'&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION);
                     $response->sendResponse();
                 }
 				

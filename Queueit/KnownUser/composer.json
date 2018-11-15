@@ -3,7 +3,7 @@
   "description": "Using queueit known user to manage magento integration",
 
   "type": "magento2-module",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "autoload": {
     "files": [ "registration.php" ],
     "psr-4": {
