@@ -8,6 +8,8 @@ require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
 
 class KnownUserHandler
 {
+	const MAGENTO_SDK_VERSION = "1.2.0";
+
     public function handleRequest($customerId, $secretKey,  $observer)
     {
         $action = $observer->getEvent()->getControllerAction();
@@ -31,26 +33,25 @@ class KnownUserHandler
 
             if($result->doRedirect())
             {
-                $response = $action->getResponse(); 
-				
+                $response = $action->getResponse();            
                 $response->setHeader('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
                 $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
                 $response->setHeader('Pragma', 'no-cache');
 
                 if(!$result->isAjaxResult)
                 {
-                    $response->setRedirect($result->redirectUrl)->sendResponse();
+                    $response->setRedirect($result->redirectUrl .'&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION)->sendResponse();
                 }
                 else
                 {
-                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl());
+                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .urlencode('&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION));
                     $response->sendResponse();
                 }
 				
                 return;
             }
 
-            if(!empty($queueittoken) && !empty($result->actionType))
+            if(!empty($queueittoken) &&!empty($result->actionType))
             {   
                 $redirectUrl = $fullUrl;
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
