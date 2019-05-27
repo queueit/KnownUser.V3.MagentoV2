@@ -12,6 +12,28 @@ How to install the module using different methods.
 You can find QueueIT Knownuser extension in Magento Marketplace [here](https://marketplace.magento.com/queueit-knownuser.html).
 After adding QueueIT extension, you should follow instruction from the official Magento website to install it for your shop [here](https://docs.magento.com/marketplace/user_guide/buyers/install-extension.html).
 
+## Manual
+First make a folder for QueueIT extension in your Magento2 app/code folder as below.
+```
+$ cd <your Magento install dir>/app/code
+$ mkdir -p QueueIT/knownuser
+```
+Download code from [QueueIT Magent2 extension](https://github.com/queueit/KnownUser.V3.MagentoV2) and paste there.
+After that:
+```
+$ cd <your Magento install dir>/app/code/QueueIT
+$ mkdir knownuserv3
+```
+Download code from [QueueIT PHP SDK](https://github.com/queueit/KnownUser.V3.PHP) and paste there.
+Afterwards install it with
+```
+$ php bin/magento setup:upgrade
+```
+Doing so you can run the below command it should show *Queueit_KnownUser* as an installed module 
+```
+$ bin/magento module:status
+```
+
 ## Composer
 
 Install queueit module using composer.js
