@@ -40,11 +40,11 @@ class KnownUserHandler
 
                 if(!$result->isAjaxResult)
                 {
-                    $response->setRedirect($result->redirectUrl .'&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION)->sendResponse();
+                    $response->setRedirect($result->redirectUrl .$this->getPluginVersion())->sendResponse();
                 }
                 else
                 {
-                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .urlencode('&mg2sdkver='.KnownUserHandler::MAGENTO_SDK_VERSION));
+                    $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .urlencode($this->getPluginVersion()));
                     $response->sendResponse();
                 }
 				
@@ -53,21 +53,8 @@ class KnownUserHandler
 
             if(!empty($queueittoken) &&!empty($result->actionType))
             {   
-                $redirectUrl = $fullUrl;
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
-                if(strpos($fullUrl,"&queueittoken=")!==false)
-                {
-                    $redirectUrl = str_replace("&queueittoken=".$queueittoken,"",$fullUrl);
-                }
-                else if(strpos($fullUrl,"?queueittoken=".$queueittoken."&")!==false)
-                {
-                    $redirectUrl =  str_replace("queueittoken=".$queueittoken."&","",  $fullUrl);
-                }
-                else if(strpos($fullUrl,"?queueittoken=".$queueittoken)!==false)
-                {
-                    $redirectUrl = str_replace("?queueittoken=".$queueittoken,"",  $fullUrl);
-                }
-                $action->getResponse()->setRedirect( $redirectUrl)->sendResponse();
+                $action->getResponse()->setRedirect( $currentUrlWithoutQueueitToken)->sendResponse();
                 return;
             }
         }
@@ -79,6 +66,12 @@ class KnownUserHandler
           //log the exception
         }
     }
+
+    private  function getPluginVersion()
+    {
+        return '&kupver=magento2_'.KnownUserHandler::MAGENTO_SDK_VERSION;
+    }
+
     private function getFullRequestUri()
     {
         // Get HTTP/HTTPS (the possible values for this vary from server to server)
