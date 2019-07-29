@@ -8,7 +8,7 @@ require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
 
 class KnownUserHandler
 {
-	const MAGENTO_SDK_VERSION = "1.2.1";
+	const MAGENTO_SDK_VERSION = "1.3.0";
 
     public function handleRequest($customerId, $secretKey,  $observer)
     {

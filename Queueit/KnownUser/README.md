@@ -58,7 +58,11 @@ In here
 
 - **Enabled**: Enable/disable module execution. If enabled this will generally give a redirect on every request. So it is advanced to enable it only before an event is starting.
 - **CustomerID**: This is usually your account name
-- **Secret Key**: This is the secret key found in QueueIt: `Account -> Security -> Known User (tab) -> Default secret key` 
+- **Secret Key**: This is the secret key found in QueueIt: `Account -> Security -> Known User (tab) -> Default secret key`
+- **How are the configs updated**: The way changes on QueueIT's side are requested
+  - Push: Configure url in QueueIT. Postback url is `{{store_url}}/rest/V1/queueit/integrationinfo/`
+  - Manual: To Update configuration manually or to see the current configuration: `Content -> QueueIt KnownUser -> Admin`. You can see the current config at this page and also upload confugartion file for updating it. 
+
 
 # FPC  (Protecting ajax calls on static pages)
 If you have Full Page Cache enabled you should add queue-it javascript to your pages as below :
@@ -77,3 +81,4 @@ You can add this tag in the header files : `...\vendor\magento\module-theme\view
 </script>
 ```
 3) Add some triggers for your dynamic ajax calls you want to queue users on.
+
