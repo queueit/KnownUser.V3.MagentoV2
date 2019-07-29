@@ -1,23 +1,580 @@
-     <p>
-      <label style="width:200px" >Publisher</label>
-      <br/>
-        <input readonly type="text" value="<?php echo $this->getAccountId() ?>" > </input>
-    </p>
-     <p>
-      <label style="width:100px" >Version</label>
-      <br/>
-        <input readonly type="text" value="<?php echo $this->getVersion() ?>" > </input>
-    </p>
-    <p>
-      <label style="width:100px" >Publish Date</label>
-      <br/>
-        <input readonly type="text" value="<?php echo $this->getPublishDate() ?>" > </input>
-    </p>
-    <p>
-      <label style="width:100px" >Integration Config</label>
+ <style>
+     .button {
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         height: 34px;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         touch-action: manipulation;
+         vertical-align: middle;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         perspective-origin: 36.9896px 17px;
+         transform-origin: 36.9948px 17px;
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         background: rgb(28, 152, 0) none repeat scroll 0% 0% / auto padding-box border-box;
+         border: 1px solid rgb(23, 127, 0);
+         border-radius: 4px 4px 4px 4px;
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         margin: 0px 0px 0px 5px;
+         outline: rgb(255, 255, 255) none 0px;
+         padding: 6px 12px;
+     }
+
+     /*#BUTTON_1*/
+
+     .button:after {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#BUTTON_1:after*/
+
+     .button:before {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#BUTTON_1:before*/
+
+     #I_2 {
+         bottom: -1px;
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         display: inline-block;
+         height: 14px;
+         left: 0px;
+         position: relative;
+         right: 0px;
+         text-align: center;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         top: 1px;
+         white-space: nowrap;
+         width: 14px;
+         column-rule-color: rgb(255, 255, 255);
+         perspective-origin: 7px 7px;
+         transform-origin: 7px 7px;
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 14px "Glyphicons Halflings";
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#I_2*/
+
+     #I_2:after {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         text-align: center;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 14px "Glyphicons Halflings";
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#I_2:after*/
+
+     #I_2:before {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         content: '""';
+         cursor: pointer;
+         text-align: center;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         perspective-origin: 0px 0px;
+         transform-origin: 0px 0px;
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 14px "Glyphicons Halflings";
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#I_2:before*/
+
+     #SPAN_3 {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         text-align: center;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         perspective-origin: 0px 0px;
+         transform-origin: 0px 0px;
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#SPAN_3*/
+
+     #SPAN_3:after {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         text-align: center;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#SPAN_3:after*/
+
+     #SPAN_3:before {
+         box-sizing: border-box;
+         color: rgb(255, 255, 255);
+         cursor: pointer;
+         text-align: center;
+         text-decoration: none solid rgb(255, 255, 255);
+         text-size-adjust: 100%;
+         white-space: nowrap;
+         column-rule-color: rgb(255, 255, 255);
+         user-select: none;
+         caret-color: rgb(255, 255, 255);
+         border: 0px none rgb(255, 255, 255);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(255, 255, 255) none 0px;
+     }
+
+     /*#SPAN_3:before*/
 
 
-    </p>
-          <textarea rows="10" cols="200" readonly >
-<?php echo $this->getIntegrationConfig() ?>
-          </textarea>
+
+     .input-text {
+         box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset;
+         color: rgb(85, 85, 85);
+         display: block;
+         height: 34px;
+         text-decoration: none solid rgb(85, 85, 85);
+         text-size-adjust: 100%;
+         column-rule-color: rgb(85, 85, 85);
+         perspective-origin: 341.833px 17px;
+         transform-origin: 341.833px 17px;
+         caret-color: rgb(85, 85, 85);
+         border: 1px solid rgb(204, 204, 204);
+         border-radius: 4px 4px 4px 4px;
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(85, 85, 85) none 0px;
+         padding: 6px 12px;
+
+         transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+     }
+
+     /*#INPUT_1*/
+
+     #input-text:after {
+         box-sizing: border-box;
+         color: rgb(85, 85, 85);
+         text-decoration: none solid rgb(85, 85, 85);
+         text-size-adjust: 100%;
+         column-rule-color: rgb(85, 85, 85);
+         caret-color: rgb(85, 85, 85);
+         border: 0px none rgb(85, 85, 85);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(85, 85, 85) none 0px;
+     }
+
+     /*#INPUT_1:after*/
+
+     #input-text:before {
+         box-sizing: border-box;
+         color: rgb(85, 85, 85);
+         text-decoration: none solid rgb(85, 85, 85);
+         text-size-adjust: 100%;
+         column-rule-color: rgb(85, 85, 85);
+         caret-color: rgb(85, 85, 85);
+         border: 0px none rgb(85, 85, 85);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(85, 85, 85) none 0px;
+     }
+
+     /*#INPUT_1:before*/
+
+
+
+
+     input[type="file"] {
+         display: none;
+     }
+
+     .custom-file-upload {
+         border: 1px solid #ccc;
+         display: inline-block;
+         padding: 6px 12px;
+         cursor: pointer;
+     }
+
+
+     .TEXTAREA_1 {
+         box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset;
+         color: rgb(85, 85, 85);
+         display: block;
+         text-decoration: none solid rgb(85, 85, 85);
+         text-size-adjust: 100%;
+         width: 1040.5px;
+         column-rule-color: rgb(85, 85, 85);
+         perspective-origin: 520.25px 37px;
+         transform-origin: 520.25px 37px;
+         caret-color: rgb(85, 85, 85);
+         border: 1px solid rgb(204, 204, 204);
+         border-radius: 4px 4px 4px 4px;
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(85, 85, 85) none 0px;
+         padding: 6px 12px;
+         transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+     }
+
+     /*#TEXTAREA_1*/
+
+     .TEXTAREA_1:after {
+         box-sizing: border-box;
+         color: rgb(85, 85, 85);
+         text-decoration: none solid rgb(85, 85, 85);
+         text-size-adjust: 100%;
+         column-rule-color: rgb(85, 85, 85);
+         caret-color: rgb(85, 85, 85);
+         border: 0px none rgb(85, 85, 85);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(85, 85, 85) none 0px;
+     }
+
+     /*#TEXTAREA_1:after*/
+
+     .TEXTAREA_1:before {
+         box-sizing: border-box;
+         color: rgb(85, 85, 85);
+         text-decoration: none solid rgb(85, 85, 85);
+         text-size-adjust: 100%;
+         column-rule-color: rgb(85, 85, 85);
+         caret-color: rgb(85, 85, 85);
+         border: 0px none rgb(85, 85, 85);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         outline: rgb(85, 85, 85) none 0px;
+     }
+
+     /*#TEXTAREA_1:before*/
+
+
+
+     #IMG_1 {
+         box-sizing: border-box;
+         color: rgb(28, 152, 0);
+         display: block;
+         padding-top: 15px;
+         padding-left: 5px;
+         max-width: 100%;
+         text-align: center;
+         text-decoration: none solid rgb(28, 152, 0);
+         text-size-adjust: 100%;
+         width: 220px;
+         word-break: break-word;
+         column-rule-color: rgb(28, 152, 0);
+         perspective-origin: 110px 11.0417px;
+         transform-origin: 110px 11.0417px;
+         caret-color: rgb(28, 152, 0);
+         border: 0px none rgb(28, 152, 0);
+         font: normal normal 400 normal 18px / 50px "Open Sans", sans-serif;
+         outline: rgb(28, 152, 0) none 0px;
+     }
+
+     /*#IMG_1*/
+
+
+     .HR_1 {
+         color: rgb(128, 128, 128);
+         height: 1px;
+         opacity: 0.5;
+         text-decoration: none solid rgb(128, 128, 128);
+         text-size-adjust: 100%;
+         width: 1397.33px;
+         column-rule-color: rgb(128, 128, 128);
+         perspective-origin: 698.667px 1px;
+         transform-origin: 698.667px 1px;
+         caret-color: rgb(128, 128, 128);
+         border-top: 1px dotted rgb(128, 128, 128);
+         border-right: 0px none rgb(128, 128, 128);
+         border-bottom: 0px none rgb(128, 128, 128);
+         border-left: 0px none rgb(128, 128, 128);
+         font: normal normal 400 normal 14px / 20px "Open Sans", sans-serif;
+         margin: 20px 0px;
+         outline: rgb(128, 128, 128) none 0px;
+     }
+
+     /*#HR_1*/
+
+     /* Style the button that is used to open and close the collapsible content */
+     .collapsible {
+         background-color: #eee;
+         color: #444;
+         cursor: pointer;
+         height: 35px;
+         padding: 10px;
+         width: 100%;
+         border: none;
+         text-align: left;
+         outline: none;
+         font-size: 15px;
+     }
+
+     /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+     .active,
+     .collapsible:hover {
+         background-color: #ccc;
+     }
+
+     /* Style the collapsible content. Note: hidden by default */
+     .content {
+         padding: 0 18px;
+         display: none;
+         overflow: hidden;
+         background-color: #f1f1f1;
+     }
+
+     pre {
+         outline: 1px solid #ccc;
+         padding: 5px;
+         margin: 5px;
+     }
+
+     .string {
+         color: green;
+     }
+
+     .number {
+         color: darkorange;
+     }
+
+     .boolean {
+         color: blue;
+     }
+
+     .null {
+         color: magenta;
+     }
+
+     .key {
+         color: red;
+     }
+ </style>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    jQuery.noConflict();
+</script>
+ <div id="DIV_1" style='height:50px;background-color:#666'>
+     <img name='IMG_1' id="IMG_1"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABnUAAACmCAYAAAAMGwp+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5Rjk4NUFEMzQyRTIxMUU4OTg4QkQwOUQ2ODU2MTg0NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5Rjk4NUFENDQyRTIxMUU4OTg4QkQwOUQ2ODU2MTg0NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjlGOTg1QUQxNDJFMjExRTg5ODhCRDA5RDY4NTYxODQ3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjlGOTg1QUQyNDJFMjExRTg5ODhCRDA5RDY4NTYxODQ3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+uX+gIAAAFZJJREFUeNrs3Xu4b3Od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"
+		style="float: left;">
+         <div style="float: left;padding-top: 15px;padding-left: 20px;">
+             <h2 style="color:white"> Known user admin</h2>
+         </div>
+ </div>
+ <hr class="HR_1" />
+ <div> <span>Integration Configuration:</span></div>
+ <br />
+ <div class="form-group">
+     <p>
+         <label style="width:200px">Publisher: </label>
+         <label id="AccountId"><?php echo $this->getAccountId() ?></label>
+     </p>
+     <p>
+         <label style="width:100px">Version: </label>
+
+         <label id="Version"><?php echo $this->getVersion() ?> </label>
+     </p>
+     <p>
+         <label style="width:100px">Publish Date: </label>
+
+         <label id="PublishDate" class="form-control"> <?php echo $this->getPublishDate() ?> </label>
+     </p>
+     <button class="collapsible">Display JSON Integration Configuration</button>
+     <div class="content">         
+         <div id="Config">
+
+         </div>
+     </div>
+
+ </div>
+
+ <hr class="HR_1" />
+ <div> <span>Select your new Integration Configuration to update the old one:</span></div>
+ <br />
+ <div style="overflow: auto">
+     <form id='form' method="post" enctype="multipart/form-data">
+         <label class="button" style="float:left">
+             <input type="file" name="files[]" accept=".json" id="files[]" class="button">
+             <i class="fa fa-cloud-upload"></i> Select configuration:
+         </label> <input type='text' id="upload-file-name" class="input-text" style='margin-left: 5px;margin-right: 10px;padding-bottom: 4px;width:400px;float:left'>
+         <button id="submit-uplode-file" class="button" type="submit" disabled name="submit" style="float:left">
+             <span id="SPAN_3">Update Configuration</span>
+         </button>
+     </form>
+ </div>
+ <br />
+ <div id="announcement"></div>
+
+ <script>
+     var configString = '<?php echo $this->getIntegrationConfig() ?>';
+    if (configString != '') {
+        var config = JSON.stringify(JSON.parse(configString), null, '\t');
+    }
+
+     function output(inp) {
+         var configNode = document.getElementById("Config");
+         while (configNode.firstChild) {
+             configNode.removeChild(configNode.firstChild);
+         }
+         configNode.appendChild(document.createElement('pre')).innerHTML = inp;
+     }
+
+     function syntaxHighlight(json) {
+         json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+         return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+             var cls = 'number';
+             if (/^"/.test(match)) {
+                 if (/:$/.test(match)) {
+                     cls = 'key';
+                 } else {
+                     cls = 'string';
+                 }
+             } else if (/true|false/.test(match)) {
+                 cls = 'boolean';
+             } else if (/null/.test(match)) {
+                 cls = 'null';
+             }
+             return '<span class="' + cls + '">' + match + '</span>';
+         });
+     }
+     (function() {
+	  if (config) {
+         output(syntaxHighlight(config));
+		 }
+         var coll = document.getElementsByClassName("collapsible");
+         var i;
+
+         for (i = 0; i < coll.length; i++) {
+             coll[i].addEventListener("click", function() {
+                 this.classList.toggle("active");
+                 var content = this.nextElementSibling;
+                 if (content.style.display === "block") {
+                     content.style.display = "none";
+                 } else {
+                     content.style.display = "block";
+                 }
+             });
+         }
+
+         const url = '<?php echo $this->getUploadUrl() ?>';
+         document.getElementById('files[]').onchange = function(e) {
+             if (e.target.files.length > 0) {
+                 var filename = e.target.files[0].name;
+                 document.getElementById("upload-file-name").value = filename;
+                 document.getElementById("announcement").innerHTML = '';
+                 document.getElementById("submit-uplode-file").disabled = false;
+             }
+         };
+
+         const form = document.getElementById('form');
+
+         form.addEventListener('submit', e => {
+             e.preventDefault();
+             debugger;
+             const files = document.querySelector('[type=file]').files;
+             const formData = new FormData();
+
+             for (let i = 0; i < files.length; i++) {
+                 let file = files[i];
+
+                 formData.append('files[]', file);
+             }
+
+             console.log(files);
+             jQuery.ajax({
+                 url: url,
+                 type: "POST",
+                 data: formData,
+                 contentType: false,
+                 cache: false,
+                 processData: false,
+                 beforeSend: function() {
+                     console.log('Sending');
+                 },
+                 success: function(data) {
+                     debugger;
+                     console.log(data);
+
+                     try {
+                         var jsonData = JSON.parse(data);
+                     } catch (e) {
+                         jQuery("#announcement").html("<Span style='color:red'>" + "Some thing went wrong!" + "</Span>").fadeIn();
+                         jQuery("#announcement").html("<Span style='color:red'>" + data + "</Span>").fadeIn();
+                     }
+                     if (jsonData.stat != undefined && jsonData.stat == 'Successful') {
+                         jQuery("#AccountId").text(jsonData.configText.AccountId);
+                         jQuery("#PublishDate").text(jsonData.configText.PublishDate);
+                         jQuery("#Version").text(jsonData.configText.Version);
+                         output(syntaxHighlight(JSON.stringify(jsonData.configText, null, '\t')));
+                         //  jQuery("#Config").text(JSON.stringify(jsonData.configText, null, '\t'));
+
+
+                         jQuery("#announcement").html("<Span style='color:#4CAF50'>The File is uploaded successfully!</Span>").fadeIn();
+                         document.getElementById("submit-uplode-file").disabled = true;
+                     } else {
+                         if (jsonData.errors != undefined && jsonData.errors != '') {
+                             jQuery("#announcement").html("<Span style='color:red'>" + jsonData.errors + "</Span>").fadeIn();
+                         } else {
+
+                             jQuery("#announcement").html("<Span style='color:red'>" + "Some thing went wrong!" + "</Span>").fadeIn();
+
+                         }
+                     }
+                 },
+                 error: function(e) {
+                     console.log(e);
+                     jQuery("#announcement").html("Uploading file is faild!").fadeIn();
+                 }
+             });
+         });
+     })();
+ </script>
