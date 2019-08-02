@@ -1,9 +1,6 @@
 <?php
 namespace Queueit\KnownUser\Observer;
-require_once( __DIR__ .'/../IntegrationInfoProvider.php');
 use Magento\Framework\Event\ObserverInterface;
-
-
 
 class KnownUserObserver implements ObserverInterface
 {
@@ -29,7 +26,7 @@ class KnownUserObserver implements ObserverInterface
       if( $this->state->getAreaCode()== \Magento\Framework\App\Area::AREA_ADMINHTML)
       {
         //not any queueing logic for admin pages
-        return $this;  
+        return $this;
       }
       $controllerAction = $observer->getControllerAction();
       $req = $controllerAction->getRequest();

@@ -1,11 +1,6 @@
 <?php
 namespace Queueit\KnownUser;
 
-require_once( __DIR__ .'/IntegrationInfoProvider.php');
-require_once( __DIR__ .'/../knownuserv3/Models.php');
-require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
-
-
 class KnownUserHandler
 {
 	const MAGENTO_SDK_VERSION = "1.3.0";
@@ -15,7 +10,7 @@ class KnownUserHandler
         $action = $observer->getEvent()->getControllerAction();
         /** @var Mage_Core_Controller_Request_Http $request */
         $request = $action->getRequest();
- 
+
         try
         {
             $queueittoken = $request->getQuery('queueittoken', '');
@@ -23,17 +18,17 @@ class KnownUserHandler
             $configText =  $configProvider->getIntegrationInfo(true);
             $fullUrl = $this->getFullRequestUri();
             $currentUrlWithoutQueueitToken =  preg_replace ( "/([\\?&])(" ."queueittoken". "=[^&]*)/i" , "" ,  $fullUrl);
-            
+
             $result = \QueueIT\KnownUserV3\SDK\KnownUser::validateRequestByIntegrationConfig(
-				$currentUrlWithoutQueueitToken, 
-				$queueittoken, 
+				$currentUrlWithoutQueueitToken,
+				$queueittoken,
 				$configText,
-				$customerId, 
+				$customerId,
 				$secretKey);
 
             if($result->doRedirect())
             {
-                $response = $action->getResponse();            
+                $response = $action->getResponse();
                 $response->setHeader('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
                 $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
                 $response->setHeader('Pragma', 'no-cache');
@@ -47,12 +42,12 @@ class KnownUserHandler
                     $response->setHeader($result->getAjaxQueueRedirectHeaderKey(), $result->getAjaxRedirectUrl() .urlencode($this->getPluginVersion()));
                     $response->sendResponse();
                 }
-				
+
                 return;
             }
 
             if(!empty($queueittoken) &&!empty($result->actionType))
-            {   
+            {
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
                 $action->getResponse()->setRedirect( $currentUrlWithoutQueueitToken)->sendResponse();
                 return;
@@ -82,8 +77,7 @@ class KnownUserHandler
         $myUrl .= $_SERVER['REQUEST_URI'];
         // Add path info, if any
         if (!empty($_SERVER['PATH_INFO'])) $myUrl .= $_SERVER['PATH_INFO'];
-        return $myUrl; 
+        return $myUrl;
     }
-      
 
 }

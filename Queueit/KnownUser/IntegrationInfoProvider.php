@@ -1,15 +1,13 @@
 <?php
 namespace Queueit\KnownUser;
-require_once( __DIR__ .'/IntegrationInfoProviderInterface.php');
         /**
      * Update IntegraionInfo.
      *@api
-     */                                     
+     */
 class IntegrationInfoProvider implements IntegrationInfoProviderInterface
 {
 const CACHE_KEY = "_queueit_integrationinfo";
 const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
-
 
    public function getIntegrationInfo($useCache)
    {
@@ -26,7 +24,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
         $resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('queueit_integrationinfo'); //gives table name with prefix
-        
+
         //Select Data from table
         $sql = "Select * FROM " . $tableName . ' order by id desc limit 1' ;
 		$result="";
@@ -37,7 +35,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
 			$cacheInterface->save($result, self::CACHE_KEY, array(),5*60);
 		}
      }
-      return hex2bin($result);     
+      return hex2bin($result);
    }
 
     /**
@@ -45,7 +43,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
      * @api
      * @param string $integrationInfo
      * @param string $hash
-     * @return 
+     * @return
      */
    public function updateIntegrationInfo($integrationInfo,$hash)
    {
