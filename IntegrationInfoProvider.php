@@ -1,6 +1,5 @@
 <?php
 namespace Queueit\KnownUser;
-require_once( __DIR__ .'/IntegrationInfoProviderInterface.php');
         /**
      * Update IntegraionInfo.
      *@api
@@ -10,11 +9,34 @@ class IntegrationInfoProvider implements IntegrationInfoProviderInterface
 const CACHE_KEY = "_queueit_integrationinfo";
 const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
 
+    /**
+     * @var \Magento\Framework\App\CacheInterface
+     */
+    protected $cache;
+
+    /**
+     * @var \Magento\Framework\App\ResourceConnection
+     */
+    protected $resourceConnection;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    public function __construct(
+        \Magento\Framework\App\CacheInterface $cache,
+        \Magento\Framework\App\ResourceConnection $resourceConnection,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    ) {
+        $this->cache = $cache;
+        $this->resourceConnection = $resourceConnection;
+        $this->scopeConfig = $scopeConfig;
+    }
 
    public function getIntegrationInfo($useCache)
    {
-    $om = \Magento\Framework\App\ObjectManager::getInstance();
-    $cacheInterface = $om->get('Magento\Framework\App\CacheInterface');
+    $cacheInterface = $this->cache;
     $integrationConfig = $cacheInterface->load(self::CACHE_KEY);
      if($integrationConfig && $useCache)
      {
@@ -22,8 +44,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
      }
      else
      {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
-        $resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+        $resource = $this->resourceConnection;
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('queueit_integrationinfo'); //gives table name with prefix
         
@@ -51,8 +72,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
    {
         if($this->isValidRequest($integrationInfo,$hash))
         {
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-            $resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+            $resource = $this->resourceConnection;
             $connection = $resource->getConnection();
             $tableName = $resource->getTableName('queueit_integrationinfo'); //gives table name with prefix
             //Insert Data into table
@@ -68,8 +88,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
 
    private function isValidRequest($integrationInfo,$hash)
    {
-      $om = \Magento\Framework\App\ObjectManager::getInstance();
-      $scopeConfig = $om->get('\Magento\Framework\App\Config\ScopeConfigInterface');
+      $scopeConfig = $this->scopeConfig;
       $secretKey = $scopeConfig->getValue(
           self::CONFIG_SECRETKEY,
           \Magento\Store\Model\ScopeInterface::SCOPE_STORE

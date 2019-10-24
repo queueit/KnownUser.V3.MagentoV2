@@ -1,7 +1,6 @@
 <?php
 namespace Queueit\KnownUser;
 
-require_once( __DIR__ .'/IntegrationInfoProvider.php');
 require_once( __DIR__ .'/../knownuserv3/Models.php');
 require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
 
@@ -9,6 +8,16 @@ require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
 class KnownUserHandler
 {
 	const MAGENTO_SDK_VERSION = "1.3.0";
+
+    /**
+     * @var Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    public function __construct(Psr\Log\LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     public function handleRequest($customerId, $secretKey,  $observer)
     {
@@ -60,8 +69,7 @@ class KnownUserHandler
         }
         catch(\Exception $e)
         {
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
-                $logger = $objectManager->get("Psr\Log\LoggerInterface");
+                $logger = $this->logger;
                 $logger->debug("Queueit-knownUser: Exception while validation user request". $e);
           //log the exception
         }
