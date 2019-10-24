@@ -1,7 +1,6 @@
 <?php
 namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
 
-require_once(__DIR__ . '../../../../IntegrationInfoProvider.php');
 use \DateTime;
 
 class Index extends \Magento\Backend\App\Action
@@ -12,18 +11,26 @@ class Index extends \Magento\Backend\App\Action
     protected $resultPageFactory;
 
     /**
+     * @var \Queueit\KnownUser\IntegrationInfoProvider
+     */
+    protected $configProvider;
+
+    /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Queueit\KnownUser\IntegrationInfoProvider $configProvider
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Queueit\KnownUser\IntegrationInfoProvider $configProvider
     ) {
 
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
+        $this->configProvider = $configProvider;
     }
 
     /**
@@ -33,8 +40,7 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $configProvider = new \Queueit\KnownUser\IntegrationInfoProvider();
-        $configText =  $configProvider->getIntegrationInfo(false);
+        $configText =  $this->configProvider->getIntegrationInfo(false);
         $customerIntegration = json_decode($configText, true);
         $resultPage = $this->resultPageFactory->create();
         $layout = $resultPage->getLayout();

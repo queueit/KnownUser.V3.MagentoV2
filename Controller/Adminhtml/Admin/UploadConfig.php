@@ -4,10 +4,23 @@ namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
 
 class UploadConfig extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Queueit\KnownUser\IntegrationInfoProvider
+     */
+    protected $configProvider;
 
-	public function execute()
+    /**
+     * Constructor
+     *
+     * @param \Queueit\KnownUser\IntegrationInfoProvider $configProvider
+     */
+    public function __construct(\Queueit\KnownUser\IntegrationInfoProvider $configProvider) {
+        $this->configProvider = $configProvider;
+    }
+
+    public function execute()
 	{
-		$configProvider = new \Queueit\KnownUser\IntegrationInfoProvider();
+		$configProvider = $this->configProvider;
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			print_r('{');
 			if (isset($_FILES['files'])) {

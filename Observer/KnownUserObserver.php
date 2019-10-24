@@ -1,6 +1,5 @@
 <?php
 namespace Queueit\KnownUser\Observer;
-require_once( __DIR__ .'/../IntegrationInfoProvider.php');
 use Magento\Framework\Event\ObserverInterface;
 
 
@@ -12,16 +11,20 @@ class KnownUserObserver implements ObserverInterface
   private $scopeConfig;
   private $helper;
   private $state;
+  private $knownUserHandler;
+
   const CONFIG_ENABLED = 'queueit_knownuser/configuration/enable';
   const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
   const CONFIG_CUSTOMERID = 'queueit_knownuser/configuration/customerid';
-  public function __construct(
-  \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-  \Magento\Framework\App\State $state)
-  {
-  $this->scopeConfig = $scopeConfig;
-    $this->state= $state;
 
+  public function __construct(
+    \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+    \Magento\Framework\App\State $state,
+    \Queueit\KnownUser\KnownUserHandler $knownUserHandler
+  ) {
+    $this->scopeConfig = $scopeConfig;
+    $this->state= $state;
+    $this->knownUserHandler = $knownUserHandler;
   }
 
   public function execute(\Magento\Framework\Event\Observer $observer)
@@ -54,8 +57,7 @@ class KnownUserObserver implements ObserverInterface
       if($enable)
       {
         //if module is enable and request is not ajax do queue logic
-            $knownUserHandler = new \Queueit\KnownUser\KnownUserHandler();
-            $knownUserHandler->handleRequest($customerId,$secretKey, $observer);
+            $this->knownUserHandler->handleRequest($customerId,$secretKey, $observer);
 	 }
 	 return $this;
   }
