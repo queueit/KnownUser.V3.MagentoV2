@@ -16,7 +16,6 @@ class UploadConfig extends \Magento\Framework\App\Action\Action
 				$extensions = ['json'];
 
 				$all_files = count($_FILES['files']['tmp_name']);
-				$strConfig = "";
 				if ($all_files > 0) {
 					$file_name = $_FILES['files']['name'][0];
 					$file_tmp = $_FILES['files']['tmp_name'][0];

@@ -2,7 +2,6 @@
 namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
 
 require_once(__DIR__ . '../../../../IntegrationInfoProvider.php');
-use \DateTime;
 
 class Index extends \Magento\Backend\App\Action
 {
