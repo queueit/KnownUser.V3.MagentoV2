@@ -62,7 +62,7 @@ class KnownUserHandler
         {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
                 $logger = $objectManager->get("Psr\Log\LoggerInterface");
-                $logger->debug("Queueit-knownUser: Exception while validation user request". $e);
+                $logger->error("Queueit-knownUser: Exception while validation user request". $e);
           //log the exception
         }
     }
