@@ -3,7 +3,7 @@ namespace Queueit\KnownUser;
 
 class KnownUserHandler
 {
-	const MAGENTO_SDK_VERSION = "1.3.0";
+	const MAGENTO_SDK_VERSION = "1.3.1";
 
     public function handleRequest($customerId, $secretKey,  $observer)
     {
@@ -46,7 +46,7 @@ class KnownUserHandler
                 return;
             }
 
-            if(!empty($queueittoken) &&!empty($result->actionType))
+            if(!empty($queueittoken) && $result->actionType == "Queue")
             {
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
                 $action->getResponse()->setRedirect( $currentUrlWithoutQueueitToken)->sendResponse();
