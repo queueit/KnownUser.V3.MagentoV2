@@ -33,6 +33,11 @@ Doing so you can run the below command it should show *Queueit_KnownUser* as an 
 ```
 $ bin/magento module:status
 ```
+If Queueit_KnownUser was listed as Disabled module run the below command to enable it
+```
+$ php bin/magento module:enable Queueit_KnownUser
+$ php bin/magento setup:upgrade
+```
 
 ## Composer
 
