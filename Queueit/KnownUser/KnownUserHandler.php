@@ -1,6 +1,11 @@
 <?php
 namespace Queueit\KnownUser;
 
+require_once( __DIR__ .'/IntegrationInfoProvider.php');
+require_once( __DIR__ .'/../knownuserv3/Models.php');
+require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
+
+
 class KnownUserHandler
 {
 	const MAGENTO_SDK_VERSION = "1.3.1";
@@ -79,5 +84,6 @@ class KnownUserHandler
         if (!empty($_SERVER['PATH_INFO'])) $myUrl .= $_SERVER['PATH_INFO'];
         return $myUrl;
     }
+
 
 }
