@@ -8,9 +8,7 @@ use Magento\Framework\Event\ObserverInterface;
 class KnownUserObserver implements ObserverInterface
 {
 
-  private $urlProvider;
   private $scopeConfig;
-  private $helper;
   private $state;
   const CONFIG_ENABLED = 'queueit_knownuser/configuration/enable';
   const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
@@ -31,8 +29,6 @@ class KnownUserObserver implements ObserverInterface
         //not any queueing logic for admin pages
         return $this;  
       }
-      $controllerAction = $observer->getControllerAction();
-      $req = $controllerAction->getRequest();
 
         $enable = $this->scopeConfig->getValue(
             self::CONFIG_ENABLED,
