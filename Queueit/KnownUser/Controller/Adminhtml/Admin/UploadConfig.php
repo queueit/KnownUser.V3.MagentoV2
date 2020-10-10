@@ -7,7 +7,7 @@ class UploadConfig extends \Magento\Framework\App\Action\Action
 
 	public function execute()
 	{
-		$configProvider = new \Queueit\KnownUser\IntegrationInfoProvider();
+		$configProvider = new \Queueit\KnownUser\Model\IntegrationInfoProvider();
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			print_r('{');
 			if (isset($_FILES['files'])) {
@@ -16,7 +16,7 @@ class UploadConfig extends \Magento\Framework\App\Action\Action
 				$extensions = ['json'];
 
 				$all_files = count($_FILES['files']['tmp_name']);
-				$strConfig = "";
+
 				if ($all_files > 0) {
 					$file_name = $_FILES['files']['name'][0];
 					$file_tmp = $_FILES['files']['tmp_name'][0];

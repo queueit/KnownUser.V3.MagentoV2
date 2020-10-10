@@ -1,14 +1,14 @@
 <?php
 namespace Queueit\KnownUser;
 
-require_once( __DIR__ .'/IntegrationInfoProvider.php');
+require_once( __DIR__ .'/Model/IntegrationInfoProvider.php');
 require_once( __DIR__ .'/../knownuserv3/Models.php');
 require_once( __DIR__ .'/../knownuserv3/KnownUser.php');
 
 
 class KnownUserHandler
 {
-	const MAGENTO_SDK_VERSION = "1.3.1";
+	const MAGENTO_SDK_VERSION = "1.3.2";
 
     public function handleRequest($customerId, $secretKey,  $observer)
     {
@@ -19,7 +19,7 @@ class KnownUserHandler
         try
         {
             $queueittoken = $request->getQuery('queueittoken', '');
-            $configProvider = new IntegrationInfoProvider();
+            $configProvider = new Model\IntegrationInfoProvider(null);
             $configText =  $configProvider->getIntegrationInfo(true);
             $fullUrl = $this->getFullRequestUri();
             $currentUrlWithoutQueueitToken =  preg_replace ( "/([\\?&])(" ."queueittoken". "=[^&]*)/i" , "" ,  $fullUrl);
@@ -62,7 +62,7 @@ class KnownUserHandler
         {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
                 $logger = $objectManager->get("Psr\Log\LoggerInterface");
-                $logger->debug("Queueit-knownUser: Exception while validation user request". $e);
+                $logger->error("Queueit-knownUser: Exception while validation user request". $e);
           //log the exception
         }
     }

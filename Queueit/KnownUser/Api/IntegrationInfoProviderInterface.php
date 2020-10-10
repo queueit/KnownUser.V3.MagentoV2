@@ -1,5 +1,5 @@
 <?php
-namespace Queueit\KnownUser;
+namespace Queueit\KnownUser\Api;
  
 interface IntegrationInfoProviderInterface
 {
@@ -9,7 +9,7 @@ interface IntegrationInfoProviderInterface
      *@api
      * @param string $integrationInfo
      * @param string $hash
-     * @return 
+     * @return string
      */
    public function updateIntegrationInfo($integrationInfo,$hash);
 }

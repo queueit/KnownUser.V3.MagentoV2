@@ -1,6 +1,6 @@
 <?php
 namespace Queueit\KnownUser\Observer;
-require_once( __DIR__ .'/../IntegrationInfoProvider.php');
+require_once( __DIR__ .'/../Model/IntegrationInfoProvider.php');
 use Magento\Framework\Event\ObserverInterface;
 
 
@@ -8,31 +8,37 @@ use Magento\Framework\Event\ObserverInterface;
 class KnownUserObserver implements ObserverInterface
 {
 
-  private $urlProvider;
+
   private $scopeConfig;
-  private $helper;
   private $state;
+  private $request;
   const CONFIG_ENABLED = 'queueit_knownuser/configuration/enable';
   const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
   const CONFIG_CUSTOMERID = 'queueit_knownuser/configuration/customerid';
   public function __construct(
   \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-  \Magento\Framework\App\State $state)
+  \Magento\Framework\App\State $state,
+  \Magento\Framework\App\RequestInterface $request)
   {
   $this->scopeConfig = $scopeConfig;
     $this->state= $state;
+	$this->request = $request;
 
   }
 
   public function execute(\Magento\Framework\Event\Observer $observer)
   {
+
       if( $this->state->getAreaCode()== \Magento\Framework\App\Area::AREA_ADMINHTML)
       {
         //not any queueing logic for admin pages
         return $this;  
       }
-      $controllerAction = $observer->getControllerAction();
-      $req = $controllerAction->getRequest();
+	  
+	  if(stripos($this->request->getOriginalPathInfo(), '/swagger')!==false)
+	  {
+			return $this;
+	  }
 
         $enable = $this->scopeConfig->getValue(
             self::CONFIG_ENABLED,

@@ -1,14 +1,14 @@
 <?php
-namespace Queueit\KnownUser;
-require_once( __DIR__ .'/IntegrationInfoProviderInterface.php');
+namespace Queueit\KnownUser\Model;
         /**
      * Update IntegraionInfo.
      *@api
      */                                     
-class IntegrationInfoProvider implements IntegrationInfoProviderInterface
+class IntegrationInfoProvider
 {
 const CACHE_KEY = "_queueit_integrationinfo";
 const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
+
 
 
    public function getIntegrationInfo($useCache)
@@ -45,7 +45,7 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
      * @api
      * @param string $integrationInfo
      * @param string $hash
-     * @return 
+     * @return string
      */
    public function updateIntegrationInfo($integrationInfo,$hash)
    {
@@ -58,11 +58,11 @@ const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
             //Insert Data into table
             $sql = "Insert Into " . $tableName . " (info) Values ('" . $integrationInfo ."')";
             $connection->query($sql);
+return "success!";
         }
         else
 		{
-			 $response->setStatusCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
-			 $response->sendResponse();
+   throw new \Exception('Invalid Request');
 		}
    }
 
