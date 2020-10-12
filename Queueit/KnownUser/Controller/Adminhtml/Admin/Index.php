@@ -1,4 +1,5 @@
 <?php
+
 namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
 
 require_once(__DIR__ . '../../../../Model/IntegrationInfoProvider.php');

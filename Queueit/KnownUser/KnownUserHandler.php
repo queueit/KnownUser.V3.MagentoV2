@@ -19,7 +19,7 @@ class KnownUserHandler
         try
         {
             $queueittoken = $request->getQuery('queueittoken', '');
-            $configProvider = new Model\IntegrationInfoProvider(null);
+            $configProvider = new Model\IntegrationInfoProvider();
             $configText =  $configProvider->getIntegrationInfo(true);
             $fullUrl = $this->getFullRequestUri();
             $currentUrlWithoutQueueitToken =  preg_replace ( "/([\\?&])(" ."queueittoken". "=[^&]*)/i" , "" ,  $fullUrl);

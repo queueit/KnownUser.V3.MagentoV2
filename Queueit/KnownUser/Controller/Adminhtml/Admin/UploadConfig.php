@@ -35,7 +35,7 @@ class UploadConfig extends \Magento\Framework\App\Action\Action
 						$configProvider->updateIntegrationInfo($objectConfig->integrationInfo, $objectConfig->hash);
 						print_r("\"stat\" : \"Successful\",");
 						$configText =  $configProvider->getIntegrationInfo(false);
-						print_r("\"configText\" : " . $configText);											
+						print_r("\"configText\" : " . $configText);
 					}
 				} else {
 					$errors = 'Config file is not found in your request!';
