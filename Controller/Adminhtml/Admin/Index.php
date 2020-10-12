@@ -1,7 +1,9 @@
 <?php
+
 namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
 
-require_once(__DIR__ . '../../../../IntegrationInfoProvider.php');
+require_once(__DIR__ . '../../../../Model/IntegrationInfoProvider.php');
+
 
 class Index extends \Magento\Backend\App\Action
 {
@@ -32,7 +34,7 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $configProvider = new \Queueit\KnownUser\IntegrationInfoProvider();
+        $configProvider = new \Queueit\KnownUser\Model\IntegrationInfoProvider();
         $configText =  $configProvider->getIntegrationInfo(false);
         $customerIntegration = json_decode($configText, true);
         $resultPage = $this->resultPageFactory->create();
