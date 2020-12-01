@@ -426,7 +426,7 @@
          <label id="PublishDate" class="form-control"> <?php echo $this->getPublishDate() ?> </label>
      </p>
      <button class="collapsible">Display JSON Integration Configuration</button>
-     <div class="content">         
+     <div class="content">
          <div id="Config">
 
          </div>
@@ -516,13 +516,12 @@
 
          form.addEventListener('submit', e => {
              e.preventDefault();
- 
+
              const files = document.querySelector('[type=file]').files;
              const formData = new FormData();
 
              for (let i = 0; i < files.length; i++) {
                  let file = files[i];
-
                  formData.append('files[]', file);
              }
 
@@ -538,7 +537,6 @@
                      console.log('Sending');
                  },
                  success: function(data) {
-                    
                      console.log(data);
 
                      try {
