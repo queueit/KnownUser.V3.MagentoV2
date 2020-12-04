@@ -16,9 +16,9 @@ After adding QueueIT extension, you should follow instruction from the official 
 First make a folder for QueueIT extension in your Magento2 app/code folder as below.
 ```
 $ cd <your Magento install dir>/app/code
-$ mkdir -p QueueIT/knownuser
+$ mkdir -p Queueit/KnownUser
 ```
-Download code from [QueueIT Magent2 extension](https://github.com/queueit/KnownUser.V3.MagentoV2) and paste there.
+Download code from [QueueIT Magento2 extension](https://github.com/queueit/KnownUser.V3.MagentoV2) and paste there.
 After that:
 ```
 $ cd <your Magento install dir>/app/code/QueueIT
@@ -41,7 +41,7 @@ $ php bin/magento setup:upgrade
 
 ## Composer
 
-Install queueit module using composer.js
+Install queueit module using composer
 ```
 $ composer require queueit/knownuser
 ```
@@ -71,19 +71,18 @@ In here
 
 # FPC  (Protecting ajax calls on static pages)
 If you have Full Page Cache enabled you should add queue-it javascript to your pages as below :
-1) Make sure KnownUser code will not run on static pages (by ignoring those URLs in your integration configuration).
-2) Add below JavaScript tags to all static pages : 
-You can add this tag in the header files : `...\vendor\magento\module-theme\view\frontend\templates\html\header.phtml`
-
-```
-<script type="text/javascript" src="//static.queue-it.net/script/queueclient.min.js"></script>
-<script
- data-queueit-intercept-domain="{YOUR_CURRENT_DOMAIN}"
-   data-queueit-intercept="true"
-  data-queueit-c="{YOUR_CUSTOMER_ID}"
-  type="text/javascript"
-  src="//static.queue-it.net/script/queueconfigloader.min.js">
-</script>
-```
-3) Add some triggers for your dynamic ajax calls you want to queue users on.
+1. Make sure KnownUser code will not run on static pages (by ignoring those URLs in your integration configuration).
+2. Add below JavaScript tags to all static pages : 
+    You can add this tag in the header files : `...\vendor\magento\module-theme\view\frontend\templates\html\header.phtml`
+    ```
+    <script type="text/javascript" src="//static.queue-it.net/script/queueclient.min.js"></script>
+    <script
+     data-queueit-intercept-domain="{YOUR_CURRENT_DOMAIN}"
+       data-queueit-intercept="true"
+      data-queueit-c="{YOUR_CUSTOMER_ID}"
+      type="text/javascript"
+      src="//static.queue-it.net/script/queueconfigloader.min.js">
+    </script>
+    ```
+3. Add some triggers for your dynamic ajax calls you want to queue users on.
 

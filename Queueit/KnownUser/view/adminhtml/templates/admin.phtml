@@ -502,7 +502,7 @@
              });
          }
 
-         const url = '<?php echo $this->getUploadUrl() ?>';
+         const url = '<?= $this->getUploadUrl() ?>';
          document.getElementById('files[]').onchange = function(e) {
              if (e.target.files.length > 0) {
                  var filename = e.target.files[0].name;
@@ -518,14 +518,12 @@
              e.preventDefault();
 
              const files = document.querySelector('[type=file]').files;
-             const formData = new FormData();
-
-             for (let i = 0; i < files.length; i++) {
-                 let file = files[i];
-                 formData.append('files[]', file);
+             if (files.length === 0) {
+                 return;
              }
+             const formData = new FormData();
+             formData.append("files", files[0])
 
-             console.log(files);
              jQuery.ajax({
                  url: url,
                  type: "POST",
@@ -537,7 +535,7 @@
                      console.log('Sending');
                  },
                  success: function(data) {
-                     console.log(data);
+                     console.log("Response data: ", data);
 
                      try {
                          var jsonData = JSON.parse(data);
@@ -550,8 +548,6 @@
                          jQuery("#PublishDate").text(jsonData.configText.PublishDate);
                          jQuery("#Version").text(jsonData.configText.Version);
                          output(syntaxHighlight(JSON.stringify(jsonData.configText, null, '\t')));
-                         //  jQuery("#Config").text(JSON.stringify(jsonData.configText, null, '\t'));
-
 
                          jQuery("#announcement").html("<Span style='color:#4CAF50'>The File is uploaded successfully!</Span>").fadeIn();
                          document.getElementById("submit-uplode-file").disabled = true;
@@ -567,7 +563,7 @@
                  },
                  error: function(e) {
                      console.log(e);
-                     jQuery("#announcement").html("Uploading file is faild!").fadeIn();
+                     jQuery("#announcement").html("File upload failed!").fadeIn();
                  }
              });
          });

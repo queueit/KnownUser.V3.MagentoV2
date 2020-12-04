@@ -2,51 +2,74 @@
 
 namespace Queueit\KnownUser\Controller\Adminhtml\Admin;
 
-class UploadConfig extends \Magento\Framework\App\Action\Action
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Request\Http;
+use Magento\Framework\Data\Form\FormKey;
+use Queueit\KnownUser\Model\IntegrationInfoProvider;
+use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\MediaStorage\Model\File\Uploader;
+
+class UploadConfig extends Action
 {
+    /**
+     * @var IntegrationInfoProvider
+     */
+    protected $configProvider;
 
-	public function execute()
-	{
-		$configProvider = new \Queueit\KnownUser\Model\IntegrationInfoProvider();
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			print_r('{');
-			if (isset($_FILES['files'])) {
+    /**
+     * Constructor
+     *
+     * @param Context $context
+     * @param IntegrationInfoProvider $configProvider
+     */
+    public function __construct(
+        Context $context,
+        IntegrationInfoProvider $configProvider)
+    {
+        parent::__construct($context);
+        $this->configProvider = $configProvider;
+        // CsrfAwareAction Magento2.3+ compatibility
+        if (interface_exists(CsrfAwareActionInterface::class)) {
+            $request = $this->getRequest();
+            if ($request instanceof Http && $request->isPost() && empty($request->getParam('form_key'))) {
+                $formKey = $this->_objectManager->get(FormKey::class);
+                $request->setParam('form_key', $formKey->getFormKey());
+            }
+        }
+    }
 
-				$errors = "";
-				$extensions = ['json'];
+    public function execute()
+    {
+        $configProvider = $this->configProvider;
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return;
+        }
+        /** @var Uploader $uploader */
+        $uploader = $this->_objectManager->create(Uploader::class, ['fileId' => 'files']);
+        $uploader->setAllowedExtensions(['json']);
+        $file = $uploader->validateFile();
 
-				$all_files = count($_FILES['files']['tmp_name']);
+        print_r('{');
+        $errors = "";
 
-				if ($all_files > 0) {
-					$file_name = $_FILES['files']['name'][0];
-					$file_tmp = $_FILES['files']['tmp_name'][0];
-					$file_type = $_FILES['files']['type'][0];
-					$file_ext1 = explode('.', $file_name);
-					$file_ext2 = end($file_ext1);
-					$file_ext = strtolower($file_ext2);
+        if (isset($file)) {
+            $file_tmp = $file['tmp_name'];
 
-					if (!in_array($file_ext, $extensions)) {
-						$errors = 'extension not allowed: ' . $file_name . ' ' . $file_type;
-					}
-
-					if ($errors === "") {
-						$strConfig = file_get_contents($file_tmp);
-						$objectConfig = json_decode($strConfig);
-						$configProvider->updateIntegrationInfo($objectConfig->integrationInfo, $objectConfig->hash);
-						print_r("\"stat\" : \"Successful\",");
-						$configText =  $configProvider->getIntegrationInfo(false);
-						print_r("\"configText\" : " . $configText);
-					}
-				} else {
-					$errors = 'Config file is not found in your request!';
-				}
-				if ($errors) {
-					print_r("\"errors\" : \"");
-					print_r($errors);
-					print_r("\"");
-				}
-			}
-			print_r('}');
-		}
-	}
+            $strConfig = file_get_contents($file_tmp);
+            $objectConfig = json_decode($strConfig, false, 512, JSON_THROW_ON_ERROR);
+            $configProvider->updateIntegrationInfo($objectConfig->integrationInfo, $objectConfig->hash);
+            print_r("\"stat\" : \"Successful\",");
+            $configText = $configProvider->getIntegrationInfo(false);
+            print_r("\"configText\" : " . $configText);
+        } else {
+            $errors = 'Config file is not found in your request!';
+        }
+        if ($errors) {
+            print_r("\"errors\" : \"");
+            print_r($errors);
+            print_r("\"");
+        }
+        print_r('}');
+    }
 }

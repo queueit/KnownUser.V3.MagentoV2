@@ -2,73 +2,89 @@
 
 namespace Queueit\KnownUser\Observer;
 
-require_once(__DIR__ . '/../Model/IntegrationInfoProvider.php');
-
+use Magento\Framework\App\Area;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\State;
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-
+use Magento\Store\Model\ScopeInterface;
+use Queueit\KnownUser\KnownUserHandler;
 
 
 class KnownUserObserver implements ObserverInterface
 {
-  private $scopeConfig;
-  private $state;
-  private $request;
-  const CONFIG_ENABLED = 'queueit_knownuser/configuration/enable';
-  const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
-  const CONFIG_CUSTOMERID = 'queueit_knownuser/configuration/customerid';
+    const CONFIG_ENABLED = 'queueit_knownuser/configuration/enable';
+    const CONFIG_SECRETKEY = 'queueit_knownuser/configuration/secretkey';
+    const CONFIG_CUSTOMERID = 'queueit_knownuser/configuration/customerid';
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+    /**
+     * @var State
+     */
+    private $state;
+    /**
+     * @var RequestInterface
+     */
+    private $request;
+    /**
+     * @var KnownUserHandler
+     */
+    private $knownUserHandler;
 
-  public function __construct(
-    \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-    \Magento\Framework\App\State $state,
-    \Magento\Framework\App\RequestInterface $request
-  ) {
-    $this->scopeConfig = $scopeConfig;
-    $this->state = $state;
-    $this->request = $request;
-  }
-
-  private function isSystemPath()
-  {
-    if ($this->state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
-      //not any queueing logic for admin pages
-      return true;
-    }
-
-    if (stripos($this->request->getOriginalPathInfo(), '/swagger') !== false) {
-      return true;
-    }
-    return false;
-  }
-
-  public function execute(\Magento\Framework\Event\Observer $observer)
-  {
-
-    if($this->isSystemPath())
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        State $state,
+        RequestInterface $request,
+        KnownUserHandler $knownUserHandler
+    )
     {
-      return $this;
+        $this->scopeConfig = $scopeConfig;
+        $this->state = $state;
+        $this->request = $request;
+        $this->knownUserHandler = $knownUserHandler;
     }
 
-    $enable = $this->scopeConfig->getValue(
-      self::CONFIG_ENABLED,
-      \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-    );
-    $customerId = $this->scopeConfig->getValue(
-      self::CONFIG_CUSTOMERID,
-      \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-    );
-    $secretKey = $this->scopeConfig->getValue(
-      self::CONFIG_SECRETKEY,
-      \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-    );
-    if (is_null($secretKey) ||  is_null($customerId) || is_null($enable)) {
-      //if config is not set return
-      return $this;
+    private function isSystemPath()
+    {
+        if ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
+            //not any queueing logic for admin pages
+            return true;
+        }
+
+        if (stripos($this->request->getOriginalPathInfo(), '/swagger') !== false) {
+            return true;
+        }
+        return false;
     }
-    if ($enable) {
-      //if module is enable
-      $knownUserHandler = new \Queueit\KnownUser\KnownUserHandler();
-      $knownUserHandler->handleRequest($customerId, $secretKey, $observer);
+
+    public function execute(Observer $observer)
+    {
+        if ($this->isSystemPath()) {
+            return $this;
+        }
+        $enable = $this->scopeConfig->getValue(
+            self::CONFIG_ENABLED,
+            ScopeInterface::SCOPE_STORE
+        );
+        $customerId = $this->scopeConfig->getValue(
+            self::CONFIG_CUSTOMERID,
+            ScopeInterface::SCOPE_STORE
+        );
+        $secretKey = $this->scopeConfig->getValue(
+            self::CONFIG_SECRETKEY,
+            ScopeInterface::SCOPE_STORE
+        );
+        if (is_null($secretKey) || is_null($customerId) || is_null($enable)) {
+            //if config is not set return
+            return $this;
+        }
+        if ($enable) {
+            //if the module is enabled
+            $this->knownUserHandler->handleRequest($customerId, $secretKey, $observer);
+        }
+        return $this;
     }
-    return $this;
-  }
 }
