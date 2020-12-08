@@ -3,3 +3,4 @@
 SampleSite
 Queueit/KnownUser/vendor
 **/*.http
+/vendor
