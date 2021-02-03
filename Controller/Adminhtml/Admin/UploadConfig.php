@@ -57,7 +57,7 @@ class UploadConfig extends Action
             $file_tmp = $file['tmp_name'];
 
             $strConfig = file_get_contents($file_tmp);
-            $objectConfig = json_decode($strConfig, false, 512, JSON_THROW_ON_ERROR);
+            $objectConfig = json_decode($strConfig, false);
             $configProvider->updateIntegrationInfo($objectConfig->integrationInfo, $objectConfig->hash);
             print_r("\"stat\" : \"Successful\",");
             $configText = $configProvider->getIntegrationInfo(false);
