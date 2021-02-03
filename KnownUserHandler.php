@@ -10,7 +10,7 @@ use QueueIT\KnownUserV3\SDK\KnownUser;
 
 class KnownUserHandler
 {
-    const MAGENTO_SDK_VERSION = "1.3.3";
+    const MAGENTO_SDK_VERSION = "1.3.4";
 
     /**
      * @var LoggerInterface
