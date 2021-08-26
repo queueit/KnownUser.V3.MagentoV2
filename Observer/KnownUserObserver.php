@@ -5,6 +5,7 @@ namespace Queueit\KnownUser\Observer;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\App\State;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -30,6 +31,10 @@ class KnownUserObserver implements ObserverInterface
      */
     private $request;
     /**
+     * @var ResponseInterface
+     */
+    private $response;
+    /**
      * @var KnownUserHandler
      */
     private $knownUserHandler;
@@ -38,12 +43,14 @@ class KnownUserObserver implements ObserverInterface
         ScopeConfigInterface $scopeConfig,
         State $state,
         RequestInterface $request,
+        ResponseInterface $response,
         KnownUserHandler $knownUserHandler
     )
     {
         $this->scopeConfig = $scopeConfig;
         $this->state = $state;
         $this->request = $request;
+        $this->response = $response;
         $this->knownUserHandler = $knownUserHandler;
     }
 
@@ -83,7 +90,7 @@ class KnownUserObserver implements ObserverInterface
         }
         if ($enable) {
             //if the module is enabled
-            $this->knownUserHandler->handleRequest($customerId, $secretKey, $observer);
+            $this->knownUserHandler->handleRequest($customerId, $secretKey, $this->request, $this->response);
         }
         return $this;
     }

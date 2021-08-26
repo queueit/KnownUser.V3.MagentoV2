@@ -4,13 +4,15 @@ namespace Queueit\KnownUser;
 
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Queueit\KnownUser\Model\IntegrationInfoProvider;
 use QueueIT\KnownUserV3\SDK\KnownUser;
 
 class KnownUserHandler
 {
-    const MAGENTO_SDK_VERSION = "1.3.4";
+    const MAGENTO_SDK_VERSION = "1.3.5";
 
     /**
      * @var LoggerInterface
@@ -26,11 +28,15 @@ class KnownUserHandler
         $this->logger = $logger;
     }
 
-    public function handleRequest($customerId, $secretKey, $observer)
+    /**
+     * @param $customerId
+     * @param $secretKey
+     * @param $observer
+     * @param Http|RequestInterface $request
+     * @param ResponseInterface $response
+     */
+    public function handleRequest($customerId, $secretKey, $request, $response)
     {
-        $action = $observer->getEvent()->getControllerAction();
-        /** @var Http $request */
-        $request = $action->getRequest();
         try {
             $queueittoken = $request->getQuery('queueittoken', '');
             $configProvider = new IntegrationInfoProvider();
@@ -47,7 +53,6 @@ class KnownUserHandler
                 $secretKey);
 
             if ($result->doRedirect()) {
-                $response = $action->getResponse();
                 $response->setHeader('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
                 $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
                 $response->setHeader('Pragma', 'no-cache');
@@ -64,7 +69,7 @@ class KnownUserHandler
 
             if (!empty($queueittoken) && $result->actionType == "Queue") {
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
-                $action->getResponse()->setRedirect($currentUrlWithoutQueueitToken)->sendResponse();
+                $response->setRedirect($currentUrlWithoutQueueitToken)->sendResponse();
                 return;
             }
         } catch (\Exception $e) {
