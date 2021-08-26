@@ -10,33 +10,29 @@ How to install the module using different methods.
 
 ## Magento Marketplace
 You can find QueueIT Knownuser extension in Magento Marketplace [here](https://marketplace.magento.com/queueit-knownuser.html).
-After adding QueueIT extension, you should follow instruction from the official Magento website to install it for your shop [here](https://docs.magento.com/marketplace/user_guide/buyers/install-extension.html).
+After adding the QueueIT extension, you should follow the instructions from the official Magento website to install it for your shop [here](https://docs.magento.com/marketplace/user_guide/buyers/install-extension.html).
 
 ## Manual
-First make a folder for QueueIT extension in your Magento2 app/code folder as below.
+First clone this repository inside your Magento2 `app/code` folder like below:
+
+```bash
+cd <your Magento 2 install dir>/app/code
+git clone https://github.com/queueit/KnownUser.V3.MagentoV2.git Queueit/KnownUser
 ```
-$ cd <your Magento install dir>/app/code
-$ mkdir -p Queueit/KnownUser
+Afterwards install the extension:
 ```
-Download code from [QueueIT Magento2 extension](https://github.com/queueit/KnownUser.V3.MagentoV2) and paste there.
-After that:
+cd <your Magento 2 install dir>
+php bin/magento setup:upgrade
 ```
-$ cd <your Magento install dir>/app/code/QueueIT
-$ mkdir knownuserv3
-```
-Download code from [QueueIT PHP SDK](https://github.com/queueit/KnownUser.V3.PHP) and paste there.
-Afterwards install it with
-```
-$ php bin/magento setup:upgrade
-```
-Doing so you can run the below command it should show *Queueit_KnownUser* as an installed module 
-```
-$ bin/magento module:status
+Doing so you can run the below command. It should show *Queueit_KnownUser* as an installed module:
+ 
+```bash
+bin/magento module:status
 ```
 If Queueit_KnownUser was listed as Disabled module run the below command to enable it
 ```
-$ php bin/magento module:enable Queueit_KnownUser
-$ php bin/magento setup:upgrade
+php bin/magento module:enable Queueit_KnownUser
+php bin/magento setup:upgrade
 ```
 
 ## Composer
