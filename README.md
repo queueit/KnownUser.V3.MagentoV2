@@ -8,9 +8,6 @@ Server-side implementation of the QueueIT queueing system. This will put custome
 # Installation
 How to install the module using different methods.
 
-## Magento Marketplace
-You can find QueueIT Knownuser extension in Magento Marketplace [here](https://marketplace.magento.com/queueit-knownuser.html).
-After adding the QueueIT extension, you should follow the instructions from the official Magento website to install it for your shop [here](https://docs.magento.com/marketplace/user_guide/buyers/install-extension.html).
 
 ## Manual
 First clone this repository inside your Magento2 `app/code` folder like below:
