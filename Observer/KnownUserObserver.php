@@ -83,8 +83,8 @@ class KnownUserObserver implements ObserverInterface
         $secretKey = $this->scopeConfig->getValue(
             self::CONFIG_SECRETKEY,
             ScopeInterface::SCOPE_STORE
-        );
-        if (is_null($secretKey) || is_null($customerId) || is_null($enable)) {
+	);
+	if ($secretKey === null || $customerId === null || $enable === null) {
             //if config is not set return
             return $this;
         }

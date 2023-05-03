@@ -413,17 +413,17 @@
  <div class="form-group">
      <p>
          <label style="width:200px">Publisher: </label>
-         <label id="AccountId"><?php echo $this->getAccountId() ?></label>
+         <label id="AccountId"><?php echo $block->getAccountId() ?></label>
      </p>
      <p>
          <label style="width:100px">Version: </label>
 
-         <label id="Version"><?php echo $this->getVersion() ?> </label>
+         <label id="Version"><?php echo $block->getVersion() ?> </label>
      </p>
      <p>
          <label style="width:100px">Publish Date: </label>
 
-         <label id="PublishDate" class="form-control"> <?php echo $this->getPublishDate() ?> </label>
+         <label id="PublishDate" class="form-control"> <?php echo $block->getPublishDate() ?> </label>
      </p>
      <button class="collapsible">Display JSON Integration Configuration</button>
      <div class="content">
@@ -452,7 +452,7 @@
  <div id="announcement"></div>
 
  <script>
-     var configString = '<?php echo $this->getIntegrationConfig() ?>';
+     var configString = '<?php echo $block->getIntegrationConfig() ?>';
     if (configString != '') {
         var config = JSON.stringify(JSON.parse(configString), null, '\t');
     }
@@ -502,7 +502,7 @@
              });
          }
 
-         const url = '<?= $this->getUploadUrl() ?>';
+         const url = '<?= $block->getUploadUrl() ?>';
          document.getElementById('files[]').onchange = function(e) {
              if (e.target.files.length > 0) {
                  var filename = e.target.files[0].name;
@@ -569,3 +569,4 @@
          });
      })();
  </script>
+
