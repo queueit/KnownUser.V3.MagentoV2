@@ -2,6 +2,8 @@
 
 namespace Queueit\KnownUser\Observer;
 
+use Magento\Framework\App\ActionFlag;
+use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
@@ -38,13 +40,18 @@ class KnownUserObserver implements ObserverInterface
      * @var KnownUserHandler
      */
     private $knownUserHandler;
+    /**
+     * @var ActionFlag
+     */
+    private $actionFlag;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         State $state,
         RequestInterface $request,
         ResponseInterface $response,
-        KnownUserHandler $knownUserHandler
+        KnownUserHandler $knownUserHandler,
+        ActionFlag $actionFlag
     )
     {
         $this->scopeConfig = $scopeConfig;
@@ -52,6 +59,7 @@ class KnownUserObserver implements ObserverInterface
         $this->request = $request;
         $this->response = $response;
         $this->knownUserHandler = $knownUserHandler;
+        $this->actionFlag = $actionFlag;
     }
 
     private function isSystemPath()
@@ -89,8 +97,12 @@ class KnownUserObserver implements ObserverInterface
             return $this;
         }
         if ($enable) {
-            //if the module is enabled
-            $this->knownUserHandler->handleRequest($customerId, $secretKey, $this->request, $this->response);
+            $redirected = $this->knownUserHandler->handleRequest(
+                $customerId, $secretKey, $this->request, $this->response
+            );
+            if ($redirected) {
+                $this->actionFlag->set('', ActionInterface::FLAG_NO_DISPATCH, true);
+            }
         }
         return $this;
     }

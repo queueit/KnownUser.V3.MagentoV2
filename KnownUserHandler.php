@@ -12,7 +12,7 @@ use QueueIT\KnownUserV3\SDK\KnownUser;
 
 class KnownUserHandler
 {
-    const MAGENTO_SDK_VERSION = "1.3.5";
+    const MAGENTO_SDK_VERSION = "1.3.6";
 
     /**
      * @var LoggerInterface
@@ -64,18 +64,19 @@ class KnownUserHandler
                     $response->sendResponse();
                 }
 
-                return;
+                return true;
             }
 
             if (!empty($queueittoken) && $result->actionType == "Queue") {
                 //Request can continue - we remove queueittoken form querystring parameter to avoid sharing of user specific token
                 $response->setRedirect($currentUrlWithoutQueueitToken)->sendResponse();
-                return;
+                return true;
             }
         } catch (\Exception $e) {
             $this->logger->error("Queueit-knownUser: Exception while validating user request: " . $e);
             //log the exception
         }
+        return false;
     }
 
     private function getPluginVersion()
