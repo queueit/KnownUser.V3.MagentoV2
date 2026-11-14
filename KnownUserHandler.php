@@ -19,7 +19,7 @@ class KnownUserHandler
      */
     protected $logger;
 
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct(?LoggerInterface $logger = null)
     {
         if ($logger == null) {
             $objectManager = ObjectManager::getInstance(); // Instance of object manager
