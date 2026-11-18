@@ -33,9 +33,9 @@ class IntegrationInfoProvider
     protected $scopeConfig;
 
     public function __construct(
-        CacheInterface $cache = null,
-        ResourceConnection $resourceConnection = null,
-        ScopeConfigInterface $scopeConfig = null)
+        ?CacheInterface $cache = null,
+        ?ResourceConnection $resourceConnection = null,
+        ?ScopeConfigInterface $scopeConfig = null)
     {
         $om = ObjectManager::getInstance();
         if ($cache == null) {
