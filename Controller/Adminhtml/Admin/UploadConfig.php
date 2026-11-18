@@ -43,7 +43,7 @@ class UploadConfig extends Action
     {
         $configProvider = $this->configProvider;
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return;
+            return $this->getResponse();
         }
         /** @var Uploader $uploader */
         $uploader = $this->_objectManager->create(Uploader::class, ['fileId' => 'files']);
@@ -71,5 +71,6 @@ class UploadConfig extends Action
             print_r("\"");
         }
         print_r('}');
+        return $this->getResponse();
     }
 }
